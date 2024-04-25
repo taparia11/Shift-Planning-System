@@ -38,7 +38,7 @@ function CreateAvailability() {
         setEndTime('');
         getAvailability();
       } else {
-        toast.error("Something went wrong");
+        toast.error(json.msg);
       }
     } else {
       toast.error("Time range must be at least 4 hours apart.");

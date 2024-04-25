@@ -10,32 +10,35 @@ const Register = () => {
     // Method to register new employee 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_IP}/api/auth/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, contact: credentials.contact, role: "Employee" })
-        });
-        const json = await response.json();
-        console.log(json);
-        if (json.success) {
-            //save the auth token and redirect
-            localStorage.setItem('token', json.authtoken);
-            var userType = parseJwt(json.authtoken)
-            localStorage.setItem('raccess', userType.user.role);
-            toast.success('Account Created Successfully!')
-            navigate("/employee/availability");
-        }
-        else {
-            if (json.errors.msg) {
-                toast.error(json.errors.msg)
+        if (credentials.password !== credentials.confirm_password) {
+            toast.error("Password incorrect")
+        } else {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_IP}/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, contact: credentials.contact, role: "Employee" })
+            });
+            const json = await response.json();
+            console.log(json);
+            if (json.success) {
+                //save the auth token and redirect
+                localStorage.setItem('token', json.authtoken);
+                var userType = parseJwt(json.authtoken)
+                localStorage.setItem('raccess', userType.user.role);
+                toast.success('Account Created Successfully!')
+                navigate("/employee/availability");
             }
             else {
-                toast.error("Fill all fields correctly")
+                if (json.errors.msg) {
+                    toast.error(json.errors.msg)
+                }
+                else {
+                    toast.error("Fill all fields correctly")
+                }
             }
         }
-
     }
     // Method to parse JWT to JSON 
     function parseJwt(token) {

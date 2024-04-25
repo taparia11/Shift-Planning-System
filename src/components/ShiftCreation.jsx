@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 
 function ShiftCreation() {
@@ -55,10 +55,13 @@ function ShiftCreation() {
 
     const json = await response.json();
     if (json.success) {
-      toast.success("Employee available");
+      toast.success("Employee Shift Assigned");
+      setDate('');
+      setStartTime('');
+      setEndTime('');
       setEmployee(json.employees)
     } else {
-      toast.error("No employee available");
+      toast.error("Already assigned a shift in this range");
     }
   }
 
