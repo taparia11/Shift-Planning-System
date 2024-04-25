@@ -5,11 +5,9 @@ const AvailabilityTable = () => {
     const context = useContext(ShiftContext);
     const { availability, getAvailability } = context;
 
-    // Get the current date
     const currentDate = new Date();
-    
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
+    
     // Generate dates for the next 7 days
     const next7Days = Array.from({ length: 7 }, (_, index) => {
         const nextDate = new Date(currentDate);
@@ -18,17 +16,9 @@ const AvailabilityTable = () => {
     });
 
     useEffect(() => {
-        // Fetch data from your API here
         getAvailability();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // Function to format ISO date string to hh:mm
-    const formatTime = (isoString) => {
-        const date = new Date(isoString);
-        const hours = date.getUTCHours().toString().padStart(2, '0');
-        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
-    };
 
     return (
         <>

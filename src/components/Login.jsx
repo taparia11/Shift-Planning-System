@@ -8,19 +8,19 @@ const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
     let navigate = useNavigate();
 
+    // Method to Login into SFS
     const handleSubmit = async (e) => {
         e.preventDefault();
         toast.loading("Loading...")
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_IP}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({  email: credentials.email, password: credentials.password })
-        }); 
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+        });
 
         const json = await response.json();
-        console.log(json);
         toast.remove();
         if (json.success) {
             //save the auth token and redirect
@@ -28,7 +28,7 @@ const Login = (props) => {
             var userType = parseJwt(json.authtoken)
             localStorage.setItem('raccess', userType.user.role);
             console.log(userType.user.role)
-            if (userType.user.role == "Admin") {
+            if (userType.user.role === "Admin") {
                 toast.success("👏 Welcome Admin")
                 navigate("/admin/availability");
             }
@@ -42,6 +42,8 @@ const Login = (props) => {
         }
 
     }
+
+    // Method to parse JWT to JSON 
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -114,10 +116,6 @@ const Login = (props) => {
                                             {' '}
                                             Password{' '}
                                         </label>
-                                        <a href="#" title="" className="text-sm font-semibold text-black hover:underline">
-                                            {' '}
-                                            Forgot password?{' '}
-                                        </a>
                                     </div>
                                     <div className="mt-2">
                                         <input

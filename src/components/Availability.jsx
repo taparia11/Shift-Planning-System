@@ -1,12 +1,12 @@
 import React from 'react'
-import CreateShifts from './CreateAvailability'
+import CreateAvailability from './CreateAvailability'
 import AvailabilityTable from './AvailabilityTable'
 
 const Availability = () => {
   return (
 
     <>
-        <CreateShifts />
+        <CreateAvailability />
         <AvailabilityTable />
     </>
   )

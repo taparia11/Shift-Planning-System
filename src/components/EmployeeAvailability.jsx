@@ -3,9 +3,8 @@ import ShiftContext from '../context/shifts/shiftContext';
 
 const EmployeeAvailability = () => {
     const context = useContext(ShiftContext);
-    const { availability, getAvailability,employees, getEmployeeList,getEmployeeAvailabilityById } = context;
+    const { availability, employees, getEmployeeList, getEmployeeAvailabilityById } = context;
 
-    // Get the current date
     const currentDate = new Date();
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -17,36 +16,26 @@ const EmployeeAvailability = () => {
     });
 
     useEffect(() => {
-        // Fetch data from your API here
-        // getAvailability();
         getEmployeeList();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // Function to format ISO date string to hh:mm
-    const formatTime = (isoString) => {
-        const date = new Date(isoString);
-        const hours = date.getUTCHours().toString().padStart(2, '0');
-        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
-    };
 
     return (
         <>
             <section className="mx-auto w-full max-w-7xl px-4 py-4">
                 <h1>Select an Employee to know their Avaliability</h1>
-                <select name="employee" id="employee" className='w-72 mb-4 border-2 border-black' onChange={(e)=>{
-                    if(e.target.value==='select an employee') return
+                <select name="employee" id="employee" className='w-72 mb-4 border-2 border-black' onChange={(e) => {
+                    if (e.target.value === 'select an employee') return
                     getEmployeeAvailabilityById(e.target.options[e.target.selectedIndex].id)
                     console.log(availability)
-                    // console.log(e.target.options[e.target.selectedIndex].id)
                 }}>
-  <option value={'select an employee'}>Select an Employee</option>
+                    <option value={'select an employee'}>Select an Employee</option>
 
-                    {employees?.map(employee=>(
-  <option value={employee.name} id={employee._id}>{employee.name}</option>
+                    {employees?.map(employee => (
+                        <option value={employee.name} id={employee._id}>{employee.name}</option>
                     ))
-                  
-}
+
+                    }
                 </select>
                 <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                     <div>
@@ -71,14 +60,14 @@ const EmployeeAvailability = () => {
                                         {availability.map((available) => (
                                             <tr key={available.date} className="divide-x divide-gray-200">
                                                 {next7Days.map((date, index) => (
-                                                    
+
                                                     <td key={index} className=
-                                                        {` text-black-500 whitespace-nowrap px-4 py-4 text-sm ${available.date.substring(0,10) === date.toISOString().split('T')[0] ? `bg-green-100` : ''}`}
+                                                        {` text-black-500 whitespace-nowrap px-4 py-4 text-sm ${available.date.substring(0, 10) === date.toISOString().split('T')[0] ? `bg-green-100` : ''}`}
                                                     >
-                                                        {available.date.substring(0,10) === date.toISOString().split('T')[0] ? `✅ ${available.startTime.substring(11,16)} to ${available.endTime.substring(11,16)}` : ""}
+                                                        {available.date.substring(0, 10) === date.toISOString().split('T')[0] ? `✅ ${available.startTime.substring(11, 16)} to ${available.endTime.substring(11, 16)}` : ""}
                                                     </td>
-                                                 
-                                                    
+
+
                                                 ))}
                                             </tr>
                                         ))}

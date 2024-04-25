@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { AlertTriangle, X } from 'lucide-react'
-import {toast, Toaster} from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast'
 
-const Signup = () => {
+const Register = () => {
     const [credentials, setCredentials] = useState({ name: "", email: "", contact: "", password: "", confirm_password: "" })
     let navigate = useNavigate();
+
+    // Method to register new employee 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://192.168.1.13:5000/api/auth/register', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_IP}/api/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, contact:credentials.contact, role:"Employee" })
+            body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, contact: credentials.contact, role: "Employee" })
         });
         const json = await response.json();
         console.log(json);
@@ -27,16 +28,16 @@ const Signup = () => {
             navigate("/employee/availability");
         }
         else {
-            if(json.errors.msg){
+            if (json.errors.msg) {
                 toast.error(json.errors.msg)
             }
-            else{
+            else {
                 toast.error("Fill all fields correctly")
             }
         }
 
     }
-
+    // Method to parse JWT to JSON 
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -53,7 +54,7 @@ const Signup = () => {
     return (
 
         <section>
-            <div><Toaster/></div>
+            <div><Toaster /></div>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
                 <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
                     <div className="mb-2 flex justify-center">
@@ -135,7 +136,6 @@ const Signup = () => {
                                         name="contact"
                                         value={credentials.contact}
                                         onChange={onChange}
-                                        // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                                         required
                                     ></input>
                                 </div>
@@ -197,4 +197,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Register
