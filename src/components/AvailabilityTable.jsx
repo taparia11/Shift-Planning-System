@@ -48,9 +48,9 @@ const AvailabilityTable = () => {
                                                 {next7Days.map((date, index) => (
                                                     
                                                     <td key={index} className=
-                                                        {` text-black-500 whitespace-nowrap px-4 py-4 text-sm ${available.date.substring(0,10) === date.toISOString().split('T')[0] ? `bg-green-100` : ''}`}
+                                                        {` text-black-500 whitespace-nowrap px-4 py-4 text-sm ${available.date?.substring(0,10) === date.toISOString().split('T')[0] ? `bg-green-100` : ''}`}
                                                     >
-                                                        {available.date.substring(0,10) === date.toISOString().split('T')[0] ? `✅ ${available.startTime.substring(11,16)} to ${available.endTime.substring(11,16)}` : ""}
+                                                        {available.date?.substring(0,10) === date.toISOString().split('T')[0] ? `✅ ${available.startTime?.substring(11,16)} to ${available.endTime?.substring(11,16)}` : ""}
                                                     </td>
                                                  
                                                     

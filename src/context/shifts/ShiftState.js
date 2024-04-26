@@ -43,7 +43,8 @@ const ShiftState = (props) =>{
             }
         });
         const json = await response.json()
-        setAvailability(json)
+        console.log(json)
+        setAvailability([...json])
     }
     
     const [employees, setemployees] = useState([]) 

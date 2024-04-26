@@ -27,12 +27,11 @@ const EmployeeAvailability = () => {
                 <select name="employee" id="employee" className='w-72 mb-4 border-2 border-black' onChange={(e) => {
                     if (e.target.value === 'select an employee') return
                     getEmployeeAvailabilityById(e.target.options[e.target.selectedIndex].id)
-                    console.log(availability)
                 }}>
                     <option value={'select an employee'}>Select an Employee</option>
 
                     {employees?.map(employee => (
-                        <option value={employee.name} id={employee._id}>{employee.name}</option>
+                        <option value={employee.name} key={employee._id} id={employee._id}>{employee.name}</option>
                     ))
 
                     }
@@ -58,7 +57,7 @@ const EmployeeAvailability = () => {
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 bg-white">
                                         {availability.map((available) => (
-                                            <tr key={available.date} className="divide-x divide-gray-200">
+                                            <tr key={available._id} className="divide-x divide-gray-200">
                                                 {next7Days.map((date, index) => (
 
                                                     <td key={index} className=

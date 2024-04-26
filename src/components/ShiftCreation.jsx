@@ -29,9 +29,8 @@ function ShiftCreation() {
         },
         body: JSON.stringify({ date: date, startTime: startTime, endTime: endTime })
       });
-      console.log({ date: date, startTime: startTime, endTime: endTime })
       const json = await response.json();
-      console.log(json)
+      setEmployee([])
       if (json.success) {
         toast.success("Employee available");
         setEmployee(json.employees)
@@ -61,7 +60,7 @@ function ShiftCreation() {
       setEndTime('');
       setEmployee(json.employees)
     } else {
-      toast.error("Already assigned a shift in this range");
+      toast.error("Already assigned a shift in this time range");
     }
   }
 
